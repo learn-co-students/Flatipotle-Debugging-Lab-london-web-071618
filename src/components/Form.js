@@ -16,7 +16,7 @@ class Form extends Component {
     ...DEFAULT_STATE
   }
 
-  handleSubmit() {
+  handleSubmit = (event) => {
     event.preventDefault()
     document.getElementById("order-form").reset()
     this.props.addOrder(this.state)
@@ -25,13 +25,15 @@ class Form extends Component {
     })
   }
 
-  handleChange() {
+  handleChange = (event) => {
     const itemType = event.target.name
     const item = event.target.value
 
-    !this.state[`${itemType}`].includes(item) ?
+    console.log("hi",itemType,item)
+
+    !this.state[itemType].includes(item) ?
       this.setState({
-        [itemType]: this.state[`${itemType}`].concat(item)
+        [itemType]: [...this.state[itemType], item]
       })
     :
       this.setState({
@@ -39,6 +41,11 @@ class Form extends Component {
           ingr => ingr !== item
         )
       })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.props.addOrder(this.state)
   }
 
   render() {
